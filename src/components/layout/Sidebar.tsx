@@ -192,9 +192,23 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
         isCollapsed ? "w-16" : "w-64"
       )}
     >
+      {/* Collapse toggle — straddles the sidebar's right border, half in the nav / half over the page */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="hidden md:flex absolute top-6 -right-3 h-6 w-6 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white items-center justify-center transition-colors border border-slate-700 shadow-md cursor-pointer z-50"
+        title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+      >
+        {isCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+      </button>
+
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="h-16 flex items-center justify-between px-3.5 border-b border-slate-800/80 shrink-0">
+        <div
+          className={cn(
+            "h-16 flex items-center border-b border-slate-800/80 shrink-0",
+            isCollapsed ? "justify-center" : "justify-start px-3.5"
+          )}
+        >
           <Link href="/dashboard" className="flex items-center gap-3 overflow-hidden">
             <div className="h-9 w-9 rounded-xl bg-sky-600 flex items-center justify-center text-white font-black text-sm tracking-wider shadow-md shrink-0">
               RB
@@ -210,14 +224,6 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
               </div>
             )}
           </Link>
-
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden md:flex h-7 w-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white items-center justify-center transition-colors border border-slate-700 cursor-pointer"
-            title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-          >
-            {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
         </div>
 
         {/* Active Business Indicator */}
