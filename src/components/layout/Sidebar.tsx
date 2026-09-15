@@ -65,7 +65,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const pathname = usePathname();
   const { currentBusiness } = useBusiness();
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
-    new Set(["sales", "purchases", "medicines", "inventory", "payments"])
+    new Set(["sales", "purchases", "products", "inventory", "payments"])
   );
 
   const toggleGroup = (title: string) => {
@@ -156,6 +156,17 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
     },
   ];
 
+  // Highlight only the single most specific nav item for the current route.
+  // A plain `pathname.startsWith(item.href)` per item (the old approach) lit
+  // up every ancestor route too — e.g. /purchases/returns matched both
+  // "Purchase Bills" (/purchases) and "Purchase Returns" (/purchases/returns)
+  // at the same time. Matching at a path-segment boundary and keeping only
+  // the longest match fixes that.
+  const activeHref = navGroups
+    .flatMap((group) => group.items)
+    .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
+    .sort((a, b) => b.href.length - a.href.length)[0]?.href;
+
   const groupDisplayTitles: Record<string, string> = {
     sales: "Sales",
     purchases: "Purchases",
@@ -227,9 +238,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             const displayTitle = groupDisplayTitles[group.title] || group.title;
             const GroupIcon = groupIcons[group.title];
             const isGroupExpanded = !isCollapsibleGroup || expandedGroups.has(group.title);
-            const isAnyItemActive = group.items.some(
-              (item) => pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/")
-            );
+            const isAnyItemActive = group.items.some((item) => item.href === activeHref);
 
             return (
               <div key={groupIdx} className="space-y-0.5">
@@ -261,7 +270,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                 {/* Nav Items */}
                 {(isGroupExpanded || isCollapsed) && group.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/");
+                  const isActive = item.href === activeHref;
 
                   return (
                     <Link
