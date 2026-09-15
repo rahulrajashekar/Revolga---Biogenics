@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Sidebar } from "./Sidebar";
 import { TopNav } from "./TopNav";
 import { cn } from "@/lib/utils";
@@ -11,8 +12,15 @@ interface AppShellProps {
 }
 
 export function AppShell({ children }: AppShellProps) {
+  const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  // Authentication screens render their own full-page layout (see
+  // AuthLayout) and must not show the app Sidebar/TopNav/status bar.
+  if (pathname?.startsWith("/auth")) {
+    return <div className="min-h-screen bg-slate-50 text-slate-900 antialiased">{children}</div>;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased">

@@ -1,4 +1,5 @@
 export * from "./medicineService";
+export * from "./productService";
 export * from "./customerService";
 export * from "./supplierService";
 export * from "./batchService";

@@ -429,3 +429,109 @@ export const PURCHASE_RETURNS: PurchaseReturn[] = [
   { id: "PR002", returnNumber: "PR-000002", date: "2026-09-09", billNumber: "PUR-000002", supplierId: "SUP002", supplierName: "Sun Pharma — South Region", medicineId: "MED010", medicineName: "Pantoprazole 40mg", batchNumber: "PANTO2025B10", quantity: 45, reason: "Expired", refundAmount: 1890, status: "debited" },
 ];
 
+// ─── PRODUCTS (CATALOG) ───────────────────────────────────────────────────────
+// Unified catalog covering every product type Revolga Biogenics deals in.
+// This is the single, isolated source of Products mock data — components must
+// go through `productService` rather than importing/mutating this array directly.
+
+export type ProductType =
+  | "medicine"
+  | "medical_device"
+  | "surgical_product"
+  | "healthcare_product"
+  | "other";
+
+export interface ProductTypeOption {
+  value: ProductType;
+  label: string;
+}
+
+export const PRODUCT_TYPES: ProductTypeOption[] = [
+  { value: "medicine", label: "Medicine" },
+  { value: "medical_device", label: "Medical Device" },
+  { value: "surgical_product", label: "Surgical Product" },
+  { value: "healthcare_product", label: "Healthcare Product" },
+  { value: "other", label: "Other" },
+];
+
+export const PRODUCT_CATEGORIES = [
+  "Antibiotics", "Analgesics", "Antidiabetics", "Cardiovascular", "Vitamins & Supplements",
+  "Gastroenterology", "Dermatology", "Respiratory", "Diagnostic Equipment", "Patient Monitoring",
+  "Surgical Consumables", "Wound Care", "Mobility Aids", "Personal Protective Equipment",
+  "Hygiene & Wellness", "General",
+];
+
+export const PRODUCT_UNITS = [
+  "Strip", "Box", "Bottle", "Vial", "Piece", "Pack", "Set", "Pair", "Roll", "Carton", "Kit", "Tube",
+];
+
+export const PRODUCT_DOSAGE_FORMS = DOSAGE_FORMS;
+
+export const PRODUCT_MANUFACTURERS = MANUFACTURERS;
+
+export interface Product {
+  id: string;
+  name: string;
+  sku: string;
+  productType: ProductType;
+  manufacturer: string;
+  category: string;
+  unit: string;
+  description?: string;
+  purchasePrice: number;
+  sellingPrice: number;
+  gstRate: number;
+  reorderLevel: number;
+  currentStock: number;
+  status: "active" | "inactive";
+
+  // Medicine-specific
+  genericName?: string;
+  strength?: string;
+  dosageForm?: string;
+  packSize?: string;
+  batchTracking?: boolean;
+  expiryTracking?: boolean;
+
+  // Medical Device-specific
+  model?: string;
+  warranty?: string;
+
+  // Shared by Medical Device / Surgical Product / Healthcare Product
+  specification?: string;
+  size?: string;
+  material?: string;
+
+  // Surgical Product-specific
+  sterile?: "sterile" | "non_sterile";
+
+  // Healthcare Product-specific
+  usageInformation?: string;
+
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const PRODUCTS: Product[] = [
+  { id: "PRD001", name: "Dolo 650", sku: "DOLO650-15", productType: "medicine", manufacturer: "Mankind Pharma", category: "Analgesics", unit: "Strip", description: "Paracetamol tablet for fever and mild pain relief.", purchasePrice: 18, sellingPrice: 24, gstRate: 12, reorderLevel: 150, currentStock: 342, status: "active", genericName: "Paracetamol", strength: "650mg", dosageForm: "Tablet", packSize: "15 Tablets", batchTracking: true, expiryTracking: true, createdAt: "2026-02-10", updatedAt: "2026-08-20" },
+  { id: "PRD002", name: "Augmentin 625 DUO", sku: "AUG625-10", productType: "medicine", manufacturer: "Cipla Ltd.", category: "Antibiotics", unit: "Strip", description: "Broad-spectrum antibiotic combination.", purchasePrice: 140, sellingPrice: 185, gstRate: 12, reorderLevel: 75, currentStock: 89, status: "active", genericName: "Amoxicillin + Clavulanic Acid", strength: "625mg", dosageForm: "Tablet", packSize: "10 Tablets", batchTracking: true, expiryTracking: true, createdAt: "2026-02-12", updatedAt: "2026-08-18" },
+  { id: "PRD003", name: "Metformin 500mg", sku: "MET500-20", productType: "medicine", manufacturer: "Sun Pharma", category: "Antidiabetics", unit: "Strip", description: "First-line oral medication for type 2 diabetes.", purchasePrice: 28, sellingPrice: 36, gstRate: 12, reorderLevel: 150, currentStock: 410, status: "active", genericName: "Metformin HCl", strength: "500mg", dosageForm: "Tablet", packSize: "20 Tablets", batchTracking: true, expiryTracking: true, createdAt: "2026-02-14", updatedAt: "2026-08-12" },
+  { id: "PRD004", name: "Insulin Glargine 100IU", sku: "INSGL100-10", productType: "medicine", manufacturer: "Sanofi", category: "Antidiabetics", unit: "Vial", description: "Long-acting insulin analogue.", purchasePrice: 780, sellingPrice: 980, gstRate: 5, reorderLevel: 30, currentStock: 45, status: "active", genericName: "Insulin Glargine", strength: "100 IU/ml", dosageForm: "Injection", packSize: "10ml Vial", batchTracking: true, expiryTracking: true, createdAt: "2026-03-01", updatedAt: "2026-08-25" },
+  { id: "PRD005", name: "Vitamin D3 60000 IU", sku: "VITD3-4", productType: "medicine", manufacturer: "Lupin Ltd.", category: "Vitamins & Supplements", unit: "Strip", description: "Weekly vitamin D3 supplementation capsule.", purchasePrice: 36, sellingPrice: 48, gstRate: 5, reorderLevel: 100, currentStock: 280, status: "active", genericName: "Cholecalciferol", strength: "60000 IU", dosageForm: "Capsule", packSize: "4 Capsules", batchTracking: true, expiryTracking: true, createdAt: "2026-03-05", updatedAt: "2026-07-30" },
+  { id: "PRD006", name: "Salbutamol Inhaler", sku: "SALB100-INH", productType: "medicine", manufacturer: "Cipla Ltd.", category: "Respiratory", unit: "Piece", description: "Rescue inhaler for bronchospasm relief.", purchasePrice: 110, sellingPrice: 148, gstRate: 12, reorderLevel: 40, currentStock: 6, status: "active", genericName: "Salbutamol Sulphate", strength: "100mcg/dose", dosageForm: "Inhaler", packSize: "200 doses", batchTracking: true, expiryTracking: true, createdAt: "2026-03-10", updatedAt: "2026-09-01" },
+
+  { id: "PRD007", name: "Digital Blood Pressure Monitor", sku: "BPM-DGX200", productType: "medical_device", manufacturer: "Omron Healthcare", category: "Patient Monitoring", unit: "Piece", description: "Fully automatic upper-arm digital BP monitor.", purchasePrice: 1450, sellingPrice: 1999, gstRate: 12, reorderLevel: 10, currentStock: 28, status: "active", model: "DGX-200", specification: "Oscillometric measurement, 90 reading memory", size: "Standard cuff 22-42cm", material: "ABS plastic", warranty: "2 Years", createdAt: "2026-02-20", updatedAt: "2026-08-05" },
+  { id: "PRD008", name: "Pulse Oximeter", sku: "OXY-FS20", productType: "medical_device", manufacturer: "Choicemmed", category: "Diagnostic Equipment", unit: "Piece", description: "Fingertip SpO2 and pulse rate monitor.", purchasePrice: 480, sellingPrice: 699, gstRate: 12, reorderLevel: 15, currentStock: 5, status: "active", model: "FS20B", specification: "SpO2 70-99%, OLED display", size: "Fingertip / Universal", material: "ABS plastic", warranty: "1 Year", createdAt: "2026-03-02", updatedAt: "2026-09-02" },
+  { id: "PRD009", name: "Digital Infrared Thermometer", sku: "THM-IR100", productType: "medical_device", manufacturer: "Dr. Trust", category: "Diagnostic Equipment", unit: "Piece", description: "Non-contact infrared forehead thermometer.", purchasePrice: 620, sellingPrice: 899, gstRate: 12, reorderLevel: 12, currentStock: 34, status: "active", model: "IR-100", specification: "Non-contact, ±0.2°C accuracy", size: "Handheld", material: "ABS plastic", warranty: "1 Year", createdAt: "2026-03-18", updatedAt: "2026-07-28" },
+
+  { id: "PRD010", name: "Disposable Surgical Gloves (Nitrile)", sku: "SG-NIT-M", productType: "surgical_product", manufacturer: "Top Glove", category: "Surgical Consumables", unit: "Box", description: "Powder-free nitrile examination gloves, box of 100.", purchasePrice: 320, sellingPrice: 420, gstRate: 12, reorderLevel: 50, currentStock: 210, status: "active", specification: "Powder-free, textured fingertips, box of 100", size: "Medium", material: "Nitrile", sterile: "non_sterile", createdAt: "2026-02-25", updatedAt: "2026-08-15" },
+  { id: "PRD011", name: "Sterile Disposable Syringe 5ml", sku: "SYR-5ML-S", productType: "surgical_product", manufacturer: "Hindustan Syringes (Dispo Van)", category: "Surgical Consumables", unit: "Box", description: "Single-use sterile syringe with fixed needle, box of 100.", purchasePrice: 260, sellingPrice: 340, gstRate: 12, reorderLevel: 60, currentStock: 18, status: "active", specification: "Luer-lock, box of 100 units", size: "5ml", material: "Medical-grade PP", sterile: "sterile", createdAt: "2026-03-08", updatedAt: "2026-08-30" },
+  { id: "PRD012", name: "Surgical Cotton Gauze Roll", sku: "GAUZE-4X6", productType: "surgical_product", manufacturer: "Johnson & Johnson", category: "Wound Care", unit: "Roll", description: "Absorbent cotton gauze roll for wound dressing.", purchasePrice: 45, sellingPrice: 65, gstRate: 12, reorderLevel: 100, currentStock: 320, status: "active", specification: "Highly absorbent, 8-ply", size: "4 inch x 6 metre", material: "Cotton", sterile: "sterile", createdAt: "2026-03-15", updatedAt: "2026-08-10" },
+
+  { id: "PRD013", name: "Foldable Wheelchair", sku: "WC-FOLD-STD", productType: "healthcare_product", manufacturer: "Karma Healthcare", category: "Mobility Aids", unit: "Piece", description: "Lightweight foldable wheelchair for home and clinical use.", purchasePrice: 3200, sellingPrice: 4499, gstRate: 12, reorderLevel: 5, currentStock: 9, status: "active", specification: "Foldable frame, footrest, armrest", size: "Standard adult", usageInformation: "Suitable for indoor and outdoor patient mobility support; check tyre pressure monthly.", createdAt: "2026-04-01", updatedAt: "2026-08-22" },
+  { id: "PRD014", name: "Orthopedic Cervical Collar", sku: "COL-CERV-M", productType: "healthcare_product", manufacturer: "Vissco", category: "Mobility Aids", unit: "Piece", description: "Adjustable cervical collar for neck support.", purchasePrice: 210, sellingPrice: 320, gstRate: 12, reorderLevel: 15, currentStock: 40, status: "active", specification: "Adjustable height, breathable foam", size: "Medium", usageInformation: "To be worn as advised by physician for neck injury or post-surgical support.", createdAt: "2026-04-05", updatedAt: "2026-07-19" },
+
+  { id: "PRD015", name: "Hand Sanitizer 500ml", sku: "HS-500ML", productType: "other", manufacturer: "Dettol", category: "Hygiene & Wellness", unit: "Bottle", description: "70% alcohol-based hand sanitizer, pump bottle.", purchasePrice: 90, sellingPrice: 140, gstRate: 18, reorderLevel: 40, currentStock: 130, status: "active", createdAt: "2026-04-10", updatedAt: "2026-08-27" },
+  { id: "PRD016", name: "Patient Record Folder Set", sku: "PRF-SET-50", productType: "other", manufacturer: "Revolga In-house", category: "General", unit: "Pack", description: "Set of 50 printed patient record folders for clinics.", purchasePrice: 300, sellingPrice: 450, gstRate: 12, reorderLevel: 10, currentStock: 0, status: "inactive", createdAt: "2026-01-20", updatedAt: "2026-06-01" },
+];
+

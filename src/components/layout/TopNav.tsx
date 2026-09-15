@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useBusiness } from "@/context/BusinessContext";
+import { useAuth } from "@/context/AuthContext";
 import {
   Search,
   Bell,
@@ -13,6 +15,7 @@ import {
   Pill,
   AlertTriangle,
   TrendingDown,
+  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
@@ -24,8 +27,16 @@ interface TopNavProps {
 
 export function TopNav({ onToggleMobileSidebar }: TopNavProps) {
   const { currentBusiness, t, isDevMode } = useBusiness();
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const handleLogout = async () => {
+    setShowUserMenu(false);
+    await logout();
+    router.push("/auth/login");
+  };
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shadow-2xs">
@@ -162,9 +173,9 @@ export function TopNav({ onToggleMobileSidebar }: TopNavProps) {
           {showUserMenu && (
             <div className="absolute right-0 mt-2 w-56 rounded-xl bg-white border border-slate-200 shadow-xl py-2 z-50">
               <div className="px-3 py-2 border-b border-slate-100">
-                <p className="font-semibold text-xs text-slate-900">Dr. K. S. Nair</p>
-                <p className="text-[11px] text-slate-500">{currentBusiness.businessName}</p>
-                <p className="text-[10px] text-emerald-600 font-medium">Enterprise Plan</p>
+                <p className="font-semibold text-xs text-slate-900">{user?.fullName || "Dr. K. S. Nair"}</p>
+                <p className="text-[11px] text-slate-500">{user?.email || currentBusiness.businessName}</p>
+                <p className="text-[10px] text-emerald-600 font-medium">{user ? user.role : "Enterprise Plan"}</p>
               </div>
               <div className="py-1 text-xs">
                 <Link href="/settings" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-100">
@@ -176,6 +187,14 @@ export function TopNav({ onToggleMobileSidebar }: TopNavProps) {
                 <Link href="/admin" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-100">
                   <Shield className="w-3.5 h-3.5 text-slate-400" /> SaaS Admin Portal
                 </Link>
+              </div>
+              <div className="py-1 border-t border-slate-100 text-xs">
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" /> Logout
+                </button>
               </div>
             </div>
           )}
