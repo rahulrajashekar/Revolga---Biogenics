@@ -113,6 +113,18 @@ body {
   border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
+/* Used by the auth screens' activity/telemetry sparkline bars. */
+@keyframes pulsebar {
+  from {
+    opacity: 0.55;
+    transform: scaleY(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
 /* ── PREMIUM DESIGN SYSTEM UTILITIES ────────────────────────────────────── */
 
 /* Dark-glass surface used inside the sidebar and dark hero panels — a soft
