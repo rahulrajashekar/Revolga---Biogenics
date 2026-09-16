@@ -24,10 +24,10 @@ export default function InventoryPage() {
   return (
     <div className="space-y-6 pb-10">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200/70 shadow-ambient">
         <div>
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-indigo-100 rounded-xl"><Boxes className="w-5 h-5 text-indigo-600" /></div>
+            <div className="p-2.5 bg-brand-gradient rounded-xl shadow-brand-glow"><Boxes className="w-5 h-5 text-white" /></div>
             <h1 className="text-xl font-extrabold text-slate-900">Medicine Stock</h1>
           </div>
           <p className="text-xs text-slate-500 mt-1 ml-9">
@@ -35,7 +35,7 @@ export default function InventoryPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Link href="/purchases/new" className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm">
+          <Link href="/purchases/new" className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl text-white bg-brand-gradient hover:brightness-110 transition-all shadow-brand-glow">
             <Plus className="w-3.5 h-3.5" /> Purchase Bill (Add Stock)
           </Link>
         </div>
@@ -43,11 +43,11 @@ export default function InventoryPage() {
 
       {/* Quick Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-white border border-slate-200 rounded-xl p-4 text-center">
+        <div className="bg-white border border-slate-200/70 rounded-2xl p-4 text-center shadow-ambient">
           <p className="text-xs text-slate-500">Total Medicines</p>
           <p className="text-2xl font-extrabold text-slate-900 mt-1">{MEDICINES.length}</p>
         </div>
-        <div className="bg-white border border-slate-200 rounded-xl p-4 text-center">
+        <div className="bg-white border border-slate-200/70 rounded-2xl p-4 text-center shadow-ambient">
           <p className="text-xs text-slate-500">Active Batches</p>
           <p className="text-2xl font-extrabold text-emerald-700 mt-1">{BATCHES.filter(b => b.status === "active").length}</p>
         </div>
@@ -67,7 +67,7 @@ export default function InventoryPage() {
           const Icon = tab.icon;
           const isLink = tab.href && tab.id !== "stock";
           const content = (
-            <div className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border transition-all ${activeTab === tab.id ? "bg-indigo-600 text-white border-indigo-600" : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"}`}>
+            <div className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${activeTab === tab.id ? "text-white bg-brand-gradient border-transparent shadow-brand-glow" : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"}`}>
               <Icon className="w-3.5 h-3.5" />
               {tab.label}
               <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${tab.alert ? "bg-rose-500 text-white" : activeTab === tab.id ? "bg-white/20" : "bg-slate-100 text-slate-500"}`}>{tab.count}</span>
@@ -80,7 +80,7 @@ export default function InventoryPage() {
 
       {/* Current Stock Table */}
       {activeTab === "stock" && (
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="bg-white border border-slate-200/70 rounded-2xl overflow-hidden shadow-ambient">
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead className="bg-slate-50 border-y border-slate-200 text-slate-500 uppercase text-[10px] tracking-wider">

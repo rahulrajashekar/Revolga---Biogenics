@@ -32,14 +32,14 @@ export function Dialog({ open, onOpenChange, children }: DialogProps) {
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
       <div
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs animate-in fade-in"
+        className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm animate-in fade-in"
         onClick={() => onOpenChange(false)}
         aria-hidden="true"
       />
       <div
         role="dialog"
         aria-modal="true"
-        className="relative z-10 w-full sm:max-w-2xl bg-white sm:rounded-2xl shadow-2xl border border-slate-200 my-0 sm:my-8 max-h-screen sm:max-h-[calc(100vh-4rem)] flex flex-col animate-in fade-in slide-in-from-bottom-2"
+        className="relative z-10 w-full sm:max-w-2xl bg-white sm:rounded-3xl shadow-ambient-lg border border-slate-200/70 my-0 sm:my-8 max-h-screen sm:max-h-[calc(100vh-4rem)] flex flex-col animate-in fade-in slide-in-from-bottom-2"
       >
         {children}
       </div>
@@ -83,7 +83,7 @@ export function DialogBody({ className, children }: { className?: string; childr
 
 export function DialogFooter({ className, children }: { className?: string; children: React.ReactNode }) {
   return (
-    <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end gap-2 p-5 sm:p-6 border-t border-slate-200 bg-slate-50/60 shrink-0 rounded-b-none sm:rounded-b-2xl", className)}>
+    <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end gap-2 p-5 sm:p-6 border-t border-slate-200 bg-slate-50/60 shrink-0 rounded-b-none sm:rounded-b-3xl", className)}>
       {children}
     </div>
   );

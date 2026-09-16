@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(wc -l /tmp_lint_full.txt)",
+      "Bash(grep -n \"^E:\" /tmp_lint_full.txt)",
+      "Read(//c/Users/rahul/AppData/Local/Temp/claude/e--kerala-business-os/64de2a10-bc1e-4520-8839-572d2de1f4b9/scratchpad/**)",
+      "Bash(grep -n \"^E:\\\\\\\\\\\\\\\\kerala-business-os\")"
+    ]
+  }
+}

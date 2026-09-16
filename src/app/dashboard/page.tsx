@@ -45,11 +45,15 @@ export default function MedicalDashboard() {
     <div className="space-y-6 pb-10">
       {/* ── Hero Banner ── */}
       <div
-        className="relative overflow-hidden rounded-2xl p-6 sm:p-8 text-white shadow-xl border border-emerald-900/30"
-        style={{ background: "linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%)" }}
+        className="relative overflow-hidden rounded-3xl p-6 sm:p-8 text-white shadow-ambient-lg border border-white/10"
+        style={{ background: "linear-gradient(135deg, #0b1224 0%, #0f2447 45%, #0369a1 85%, #0ea5e9 130%)" }}
       >
+        <div
+          className="absolute inset-0 opacity-40 pointer-events-none"
+          style={{ background: "radial-gradient(480px circle at 85% -10%, rgba(14,165,233,0.35), transparent 60%)" }}
+        />
         <div className="relative z-10 max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-sky-200 border border-white/20 text-xs font-medium">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-dark text-sky-200 text-xs font-medium">
             <span className="font-extrabold text-white">RB</span>
             <span>Revolga Biogenics — Medical & Healthcare Management System</span>
           </div>
@@ -57,24 +61,24 @@ export default function MedicalDashboard() {
             Good afternoon, Dr. Nair 👋
           </h1>
           <p className="text-sm text-sky-100">
-            Here's your medical business & healthcare operations overview for{" "}
+            Here&apos;s your medical business & healthcare operations overview for{" "}
             <strong className="text-white">
               {new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
             </strong>
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
-            <Link href="/sales/new" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-emerald-700 text-xs font-bold shadow-sm hover:bg-emerald-50 transition-colors">
+            <Link href="/sales/new" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white text-blue-700 text-xs font-bold shadow-ambient hover:bg-sky-50 transition-colors">
               <ShoppingCart className="w-3.5 h-3.5" /> New Tax Invoice
             </Link>
-            <Link href="/purchases/new" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/10 text-white border border-white/20 text-xs font-semibold hover:bg-white/20 transition-colors">
+            <Link href="/purchases/new" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl glass-dark text-white text-xs font-semibold hover:bg-white/15 transition-colors">
               <ShoppingBag className="w-3.5 h-3.5" /> New Purchase Bill
             </Link>
-            <Link href="/inventory/expiry" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-rose-500/80 text-white border border-rose-400/40 text-xs font-semibold hover:bg-rose-500 transition-colors">
+            <Link href="/inventory/expiry" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-500/90 text-white border border-rose-400/40 text-xs font-semibold hover:bg-rose-500 transition-colors">
               <AlertTriangle className="w-3.5 h-3.5" /> Expiry Alerts ({DASHBOARD_STATS.expiredMedicines + DASHBOARD_STATS.nearExpiryMedicines})
             </Link>
           </div>
         </div>
-        <div className="absolute right-6 top-6 opacity-5 pointer-events-none">
+        <div className="absolute right-6 top-6 opacity-10 pointer-events-none">
           <Pill className="w-48 h-48 text-white" />
         </div>
       </div>
@@ -85,7 +89,7 @@ export default function MedicalDashboard() {
           const Icon = card.icon;
           return (
             <Link key={card.label} href={card.href}
-              className="bg-white border border-slate-200 rounded-xl p-4 hover:border-emerald-300 hover:shadow-sm transition-all group"
+              className="bg-white border border-slate-200/70 rounded-2xl p-4 shadow-ambient hover:shadow-ambient-lg hover:border-blue-300/70 hover:-translate-y-0.5 transition-all duration-200 group"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -93,7 +97,7 @@ export default function MedicalDashboard() {
                   <p className="text-xl font-extrabold text-slate-900 mt-1">{card.value}</p>
                   <p className="text-[11px] text-slate-500 mt-0.5">{card.sub}</p>
                 </div>
-                <div className={`p-2.5 rounded-xl ${card.iconBg}`}>
+                <div className={`p-2.5 rounded-xl shadow-sm ${card.iconBg}`}>
                   <Icon className={`w-5 h-5 ${card.iconColor}`} />
                 </div>
               </div>
@@ -111,7 +115,7 @@ export default function MedicalDashboard() {
       {/* ── Recent Sales + Top Medicines ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Sales */}
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+        <div className="bg-white border border-slate-200/70 rounded-2xl overflow-hidden shadow-ambient">
           <div className="flex items-center justify-between p-4 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <ShoppingCart className="w-4 h-4 text-emerald-600" />
@@ -141,7 +145,7 @@ export default function MedicalDashboard() {
         </div>
 
         {/* Top Selling Medicines */}
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+        <div className="bg-white border border-slate-200/70 rounded-2xl overflow-hidden shadow-ambient">
           <div className="flex items-center justify-between p-4 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Pill className="w-4 h-4 text-blue-600" />
@@ -172,7 +176,7 @@ export default function MedicalDashboard() {
       </div>
 
       {/* ── Expiry Alert Table ── */}
-      <div className="bg-white border border-rose-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-rose-200/70 rounded-2xl overflow-hidden shadow-ambient">
         <div className="flex items-center justify-between p-4 border-b border-rose-100 bg-rose-50/50">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-rose-600" />
@@ -218,7 +222,7 @@ export default function MedicalDashboard() {
       {/* ── Low Stock + Top Customers ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Low Stock */}
-        <div className="bg-white border border-amber-200 rounded-xl overflow-hidden">
+        <div className="bg-white border border-amber-200/70 rounded-2xl overflow-hidden shadow-ambient">
           <div className="flex items-center justify-between p-4 border-b border-amber-100 bg-amber-50/50">
             <div className="flex items-center gap-2">
               <TrendingDown className="w-4 h-4 text-amber-600" />
@@ -247,7 +251,7 @@ export default function MedicalDashboard() {
         </div>
 
         {/* Top Customers */}
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+        <div className="bg-white border border-slate-200/70 rounded-2xl overflow-hidden shadow-ambient">
           <div className="flex items-center justify-between p-4 border-b border-slate-100">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-blue-600" />
@@ -277,7 +281,7 @@ export default function MedicalDashboard() {
 
       {/* ── Quick Stats Row ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Link href="/purchases" className="bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition-all group">
+        <Link href="/purchases" className="bg-white border border-slate-200/70 rounded-2xl p-4 shadow-ambient hover:shadow-ambient-lg hover:border-blue-300/70 hover:-translate-y-0.5 transition-all duration-200 group">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-blue-50 rounded-xl"><ShoppingBag className="w-5 h-5 text-blue-600" /></div>
             <div>
@@ -286,7 +290,7 @@ export default function MedicalDashboard() {
             </div>
           </div>
         </Link>
-        <Link href="/suppliers" className="bg-white border border-slate-200 rounded-xl p-4 hover:border-purple-300 transition-all group">
+        <Link href="/suppliers" className="bg-white border border-slate-200/70 rounded-2xl p-4 shadow-ambient hover:shadow-ambient-lg hover:border-purple-300/70 hover:-translate-y-0.5 transition-all duration-200 group">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-purple-50 rounded-xl"><Truck className="w-5 h-5 text-purple-600" /></div>
             <div>
@@ -295,7 +299,7 @@ export default function MedicalDashboard() {
             </div>
           </div>
         </Link>
-        <Link href="/inventory/batches" className="bg-white border border-slate-200 rounded-xl p-4 hover:border-emerald-300 transition-all group">
+        <Link href="/inventory/batches" className="bg-white border border-slate-200/70 rounded-2xl p-4 shadow-ambient hover:shadow-ambient-lg hover:border-emerald-300/70 hover:-translate-y-0.5 transition-all duration-200 group">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-emerald-50 rounded-xl"><FlaskConical className="w-5 h-5 text-emerald-600" /></div>
             <div>

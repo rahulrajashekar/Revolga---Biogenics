@@ -37,6 +37,11 @@
     --sidebar-border: #1e293b;
     --sidebar-hover: #1e293b;
     --sidebar-active: #2563eb;
+
+    /* Premium accent gradient — brand sky/blue, used for primary actions,
+       active nav states and highlight accents across the app. */
+    --accent-grad-from: #2563eb;
+    --accent-grad-to: #0ea5e9;
   }
 
   .dark {
@@ -106,4 +111,60 @@ body {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* ── PREMIUM DESIGN SYSTEM UTILITIES ────────────────────────────────────── */
+
+/* Dark-glass surface used inside the sidebar and dark hero panels — a soft
+   translucent layer over the gradient background rather than a flat fill. */
+.glass-dark {
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Ambient card shadow — soft, low-contrast at rest, lifts gently on hover.
+   Applied via the shared <Card> component. */
+.shadow-ambient {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px -16px rgba(15, 23, 42, 0.12);
+}
+
+.shadow-ambient-lg {
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06), 0 24px 48px -20px rgba(15, 23, 42, 0.18);
+}
+
+/* Brand gradient helpers — text, background and colored glow shadow. */
+.bg-brand-gradient {
+  background-image: linear-gradient(135deg, var(--accent-grad-from), var(--accent-grad-to));
+}
+
+.text-brand-gradient {
+  background-image: linear-gradient(135deg, var(--accent-grad-from), var(--accent-grad-to));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.shadow-brand-glow {
+  box-shadow: 0 8px 20px -6px rgba(37, 99, 235, 0.45);
+}
+
+/* Sidebar background — deep layered gradient with two soft glow blobs for a
+   premium, non-flat feel (pure CSS, no image assets). */
+.sidebar-premium-bg {
+  background-color: #0a0f1f;
+  background-image:
+    radial-gradient(560px circle at 0% 0%, rgba(37, 99, 235, 0.22), transparent 55%),
+    radial-gradient(480px circle at 100% 100%, rgba(14, 165, 233, 0.14), transparent 55%),
+    linear-gradient(180deg, #0b1224 0%, #0a0f1f 55%, #080c18 100%);
+}
+
+/* Subtle 1px hairline using a translucent white border — reads correctly on
+   both the light content area and the dark sidebar. */
+.hairline-light {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.hairline-dark {
+  border-color: rgba(255, 255, 255, 0.08);
 }

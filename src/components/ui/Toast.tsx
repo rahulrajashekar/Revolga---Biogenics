@@ -58,7 +58,7 @@ export function ToastViewport({ toasts, onDismiss }: { toasts: ToastItem[]; onDi
           <div
             key={t.id}
             className={cn(
-              "flex items-start gap-2.5 rounded-xl border p-3.5 shadow-lg animate-in fade-in slide-in-from-bottom-2",
+              "flex items-start gap-2.5 rounded-2xl border p-3.5 shadow-ambient-lg backdrop-blur-sm animate-in fade-in slide-in-from-bottom-2",
               variantStyles[t.variant || "info"]
             )}
             role="status"

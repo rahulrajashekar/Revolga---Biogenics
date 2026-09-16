@@ -35,6 +35,10 @@ import {
   ChevronDown,
   Globe,
   Package,
+  Award,
+  Briefcase,
+  LineChart,
+  UploadCloud,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -65,7 +69,7 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
   const pathname = usePathname();
   const { currentBusiness } = useBusiness();
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
-    new Set(["sales", "purchases", "products", "inventory", "payments"])
+    new Set(["sales", "purchases", "products", "inventory", "hr", "salesPerformance", "payments"])
   );
 
   const toggleGroup = (title: string) => {
@@ -130,6 +134,25 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
       ],
     },
     {
+      title: "hr",
+      collapsible: true,
+      items: [
+        { id: "performance", label: "Performance & Incentives", href: "/performance", icon: Award },
+      ],
+    },
+    {
+      title: "salesPerformance",
+      collapsible: true,
+      items: [
+        { id: "sales-performance", label: "Overview", href: "/sales-performance", icon: LineChart },
+        { id: "sales-performance-employees", label: "Employees", href: "/sales-performance/employees", icon: Users },
+        { id: "sales-performance-upload", label: "Excel Upload", href: "/sales-performance/upload", icon: UploadCloud },
+        { id: "sales-performance-incentives", label: "Incentives", href: "/sales-performance/incentives", icon: Award },
+        { id: "sales-performance-salary", label: "Salary / Payout", href: "/sales-performance/salary", icon: Wallet },
+        { id: "sales-performance-reports", label: "Reports", href: "/sales-performance/reports", icon: BarChart3 },
+      ],
+    },
+    {
       title: "payments",
       collapsible: true,
       items: [
@@ -173,6 +196,8 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
     products: "Products",
     medicines: "Medicines",
     inventory: "Inventory",
+    hr: "HR",
+    salesPerformance: "Sales Performance",
     payments: "Payments",
   };
 
@@ -182,20 +207,22 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
     products: Package,
     medicines: Pill,
     inventory: Boxes,
+    hr: Briefcase,
+    salesPerformance: LineChart,
     payments: CreditCard,
   };
 
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-40 h-screen bg-slate-900 text-slate-200 border-r border-slate-800 transition-all duration-300 flex flex-col justify-between select-none shadow-xl",
+        "fixed top-0 left-0 z-40 h-screen sidebar-premium-bg text-slate-300 border-r hairline-dark transition-all duration-300 flex flex-col justify-between select-none shadow-2xl",
         isCollapsed ? "w-16" : "w-64"
       )}
     >
       {/* Collapse toggle — straddles the sidebar's right border, half in the nav / half over the page */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="hidden md:flex absolute top-6 -right-3 h-6 w-6 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white items-center justify-center transition-colors border border-slate-700 shadow-md cursor-pointer z-50"
+        className="hidden md:flex absolute top-6 -right-3 h-6 w-6 rounded-full glass-dark hover:bg-white/10 text-slate-400 hover:text-white items-center justify-center transition-colors shadow-md cursor-pointer z-50"
         title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
       >
         {isCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
@@ -205,12 +232,12 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
         {/* Header */}
         <div
           className={cn(
-            "h-16 flex items-center border-b border-slate-800/80 shrink-0",
+            "h-16 flex items-center border-b hairline-dark shrink-0",
             isCollapsed ? "justify-center" : "justify-start px-3.5"
           )}
         >
           <Link href="/dashboard" className="flex items-center gap-3 overflow-hidden">
-            <div className="h-9 w-9 rounded-xl bg-sky-600 flex items-center justify-center text-white font-black text-sm tracking-wider shadow-md shrink-0">
+            <div className="h-9 w-9 rounded-xl bg-brand-gradient flex items-center justify-center text-white font-black text-sm tracking-wider shadow-brand-glow shrink-0">
               RB
             </div>
             {!isCollapsed && (
@@ -228,12 +255,12 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
         {/* Active Business Indicator */}
         {!isCollapsed && (
-          <div className="mx-3 mt-3 p-2.5 rounded-lg bg-emerald-900/30 border border-emerald-800/50 flex items-center justify-between shrink-0">
+          <div className="mx-3 mt-3 p-2.5 rounded-xl glass-dark flex items-center justify-between shrink-0">
             <div className="truncate">
-              <p className="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Active Workspace</p>
+              <p className="text-[10px] text-sky-400 font-semibold uppercase tracking-wider">Active Workspace</p>
               <p className="text-xs font-bold text-white truncate">{currentBusiness.businessName}</p>
             </div>
-            <span className="h-2.5 w-2.5 rounded-full shrink-0 bg-emerald-400 animate-pulse" />
+            <span className="h-2.5 w-2.5 rounded-full shrink-0 bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.6)] animate-pulse" />
           </div>
         )}
 
@@ -256,8 +283,8 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                       className={cn(
                         "w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer mt-2",
                         isAnyItemActive
-                          ? "text-emerald-400"
-                          : "text-slate-400 hover:text-slate-300"
+                          ? "text-sky-400"
+                          : "text-slate-500 hover:text-slate-300"
                       )}
                     >
                       <div className="flex items-center gap-1.5">
@@ -283,10 +310,10 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                       key={item.id}
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all group relative",
+                        "flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all group relative",
                         isActive
-                          ? "bg-emerald-600 text-white font-semibold shadow-md shadow-emerald-600/20"
-                          : "text-slate-400 hover:text-slate-100 hover:bg-slate-800/70"
+                          ? "bg-brand-gradient text-white font-semibold shadow-brand-glow"
+                          : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
                       )}
                       title={isCollapsed ? item.label : undefined}
                     >
@@ -315,9 +342,9 @@ export function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
         </nav>
 
         {/* Footer */}
-        <div className="p-3 border-t border-slate-800/80 bg-slate-950/40 shrink-0">
-          <div className={cn("flex items-center gap-3", isCollapsed && "justify-center")}>
-            <div className="h-8 w-8 rounded-full bg-emerald-800 border border-emerald-700 flex items-center justify-center font-bold text-xs text-emerald-300 shrink-0">
+        <div className="p-3 border-t hairline-dark shrink-0">
+          <div className={cn("flex items-center gap-3 p-1.5 rounded-xl glass-dark", isCollapsed && "justify-center")}>
+            <div className="h-8 w-8 rounded-full bg-brand-gradient flex items-center justify-center font-bold text-xs text-white shrink-0">
               KN
             </div>
             {!isCollapsed && (
